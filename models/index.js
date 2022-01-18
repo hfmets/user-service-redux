@@ -7,6 +7,11 @@ const sequelize = new Sequelize({
   username: process.env.USER,
   password: process.env.PASSWORD,
   dialect: process.env.dialect,
+  dialectOptions: {
+    ssl: {
+      require: true,
+    },
+  },
 });
 
 sequelize
