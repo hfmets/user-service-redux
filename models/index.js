@@ -1,5 +1,4 @@
 const { Sequelize, DataTypes } = require("sequelize");
-require("dotenv").config();
 let dbUrl = "";
 
 if (process.env.ENV_MODE == "dev") {
