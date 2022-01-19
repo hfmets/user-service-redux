@@ -1,7 +1,14 @@
 const { Sequelize, DataTypes } = require("sequelize");
-//require("dotenv").config();
+require("dotenv").config();
+let dbUrl = "";
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+if (process.env.ENV_MODE == "dev") {
+  dbUrl = process.env.LOCAL_DB_URL;
+} else {
+  dbUrl = process.env.DATABASE_URL;
+}
+
+const sequelize = new Sequelize(dbUrl, {
   dialectOptions: {
     ssl: {
       require: true,
