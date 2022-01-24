@@ -1,4 +1,5 @@
 const Users = require("../models/index").Users;
+const Sessions = require("../models/index").Sessions;
 const { registerSchema, loginSchema } = require("../validation/validation");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -27,6 +28,8 @@ const registerUser = async (req, res) => {
 
   try {
     const savedUser = await Users.create(user);
+    const sess = req.session;
+    req.session.userId = savedUser.id;
     res.send({ savedUser: savedUser.id });
   } catch (err) {
     res.status(400).send(err);
@@ -43,8 +46,10 @@ const login = async (req, res) => {
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword) return res.status(400).send("Invalid password");
 
-  const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET);
-  res.header("auth-token", token).send(token);
+  const sess = req.session;
+  req.session.userId = user.id;
+  sess.userId = user.id;
+  res.send("logged in");
 };
 
 const getUserById = async (req, res) => {
@@ -59,8 +64,24 @@ const getUserById = async (req, res) => {
   }
 };
 
+const verify = async (req, res) => {
+  const sess = req.body.sessionId;
+
+  console.log(sess);
+
+  try {
+    const validSession = await Sessions.findOne({ where: { sid: sess } });
+    if (validSession) return res.send(validSession.data);
+    else return res.status(400).send("invalid session");
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("invalid session");
+  }
+};
+
 module.exports = {
   registerUser,
   login,
   getUserById,
+  verify,
 };

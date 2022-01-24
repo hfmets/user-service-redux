@@ -30,6 +30,7 @@ const db = {};
 db.sequelize = sequelize;
 
 db.Users = require("./userModel")(sequelize, DataTypes);
+db.Sessions = require("./sessionModel")(sequelize, DataTypes);
 
 db.sequelize
   .sync({ force: true })
