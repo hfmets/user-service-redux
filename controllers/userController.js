@@ -3,6 +3,7 @@ const Sessions = require("../models/index").Sessions;
 const { registerSchema, loginSchema } = require("../validation/validation");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const registerUser = async (req, res) => {
   const { error } = registerSchema.validate(req.body);
@@ -30,7 +31,7 @@ const registerUser = async (req, res) => {
     const savedUser = await Users.create(user);
     const sess = req.session;
     req.session.userId = savedUser.id;
-    res.send({ savedUser: savedUser.id });
+    res.send({ savedUser: savedUser.id, user: { name: savedUser.fullName } });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -38,18 +39,27 @@ const registerUser = async (req, res) => {
 
 const login = async (req, res) => {
   const { error } = loginSchema.validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error)
+    return res
+      .status(400)
+      .send({ loggedIn: false, reason: error.details[0].message });
 
   const user = await Users.findOne({ where: { email: req.body.email } });
-  if (!user) return res.status(400).send("Email doesn't exist");
+  if (!user)
+    return res
+      .status(400)
+      .send({ loggedIn: false, reason: "Email doesn't exist" });
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
-  if (!validPassword) return res.status(400).send("Invalid password");
+  if (!validPassword)
+    return res
+      .status(400)
+      .send({ loggedIn: false, reason: "Invalid password" });
 
   const sess = req.session;
   req.session.userId = user.id;
   sess.userId = user.id;
-  res.send("logged in");
+  res.send({ loggedIn: true, user: { name: user.fullName } });
 };
 
 const getUserById = async (req, res) => {
@@ -65,7 +75,10 @@ const getUserById = async (req, res) => {
 };
 
 const verify = async (req, res) => {
-  const sess = req.body.sessionId;
+  const sess = cookieParser.signedCookie(
+    req.body.sessionCookie,
+    "keyboard cat"
+  );
 
   console.log(sess);
 
