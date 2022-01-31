@@ -22,7 +22,7 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    // sameSite: "none",
+    sameSite: "none",
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: false,
   },
@@ -33,9 +33,9 @@ const sessionConfig = {
   }),
 };
 
-// if (process.env.NODE_ENV === "production") {
-//   sessionConfig.cookie.secure = "true";
-// }
+if (process.env.NODE_ENV === "production") {
+  sessionConfig.cookie.secure = "true";
+}
 
 app.use(session(sessionConfig));
 
