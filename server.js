@@ -25,7 +25,7 @@ const sessionConfig = {
   cookie: {
     sameSite: "none",
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
+    httpOnly: false,
   },
   store: new SequelizeStore({
     db: sequelize,
