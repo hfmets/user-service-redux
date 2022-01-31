@@ -20,13 +20,12 @@ app.set("trust proxy", 1);
 const sessionConfig = {
   secret: "keyboard cat",
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   proxy: true,
-  name: "sessionId",
   cookie: {
     sameSite: "none",
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    httpOnly: false,
+    httpOnly: true,
   },
   store: new SequelizeStore({
     db: sequelize,
