@@ -8,7 +8,7 @@ const sequelize = require("./models/index");
 const cors = require("cors");
 
 const corsOptions = {
-  origin: true,
+  origin: "http://localhost:4200",
   credentials: true,
 };
 app.use(cors(corsOptions));
