@@ -22,8 +22,8 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: false,
   proxy: true,
+  name: "sessionId",
   cookie: {
-    name: "sessionId",
     sameSite: "none",
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: false,
