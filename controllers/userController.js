@@ -31,6 +31,7 @@ const registerUser = async (req, res) => {
     const savedUser = await Users.create(user);
     const sess = req.session;
     req.session.userId = savedUser.id;
+    req.session.save();
     res.send({ savedUser: savedUser.id, user: { name: savedUser.fullName } });
   } catch (err) {
     res.status(400).send(err);
@@ -59,6 +60,7 @@ const login = async (req, res) => {
   const sess = req.session;
   req.session.userId = user.id;
   sess.userId = user.id;
+  req.session.save();
   res.send({ loggedIn: true, user: { name: user.fullName } });
 };
 
