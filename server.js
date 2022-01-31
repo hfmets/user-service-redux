@@ -23,7 +23,7 @@ const sessionConfig = {
   saveUninitialized: false,
   proxy: true,
   cookie: {
-    domain: "localhost",
+    domain: "http://localhost:4200",
     sameSite: "none",
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: false,
