@@ -20,7 +20,7 @@ app.set("trust proxy", 1);
 const sessionConfig = {
   secret: "keyboard cat",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   proxy: true,
   cookie: {
     sameSite: "none",
