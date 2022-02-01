@@ -8,7 +8,7 @@ const sequelize = require("./models/index");
 const cors = require("cors");
 
 const corsOptions = {
-  origin: "http://localhost:4200",
+  origin: true,
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -23,7 +23,6 @@ const sessionConfig = {
   saveUninitialized: false,
   proxy: true,
   cookie: {
-    sameSite: "none",
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: false,
   },
@@ -36,6 +35,7 @@ const sessionConfig = {
 
 if (process.env.NODE_ENV === "production") {
   sessionConfig.cookie.secure = "true";
+  sessionConfig.cookie.sameSite = "none";
 }
 
 app.use(session(sessionConfig));
