@@ -8,7 +8,10 @@ const sequelize = require("./models/index");
 const cors = require("cors");
 
 const corsOptions = {
-  origin: true,
+  origin: [
+    "http://frontend.vandelay-user.fun",
+    "http://backend-finances.vandelay-user.fun",
+  ],
   credentials: true,
 };
 app.use(cors(corsOptions));
