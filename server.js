@@ -11,6 +11,7 @@ const corsOptions = {
   origin: [
     "http://frontend.vandelay-user.fun",
     "http://backend-finances.vandelay-user.fun",
+    "http://localhost:4200",
   ],
   credentials: true,
 };
