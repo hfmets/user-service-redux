@@ -27,7 +27,6 @@ const sessionConfig = {
   saveUninitialized: false,
   proxy: true,
   cookie: {
-    domain: "vandelay-user.fun",
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: false,
   },
@@ -38,10 +37,9 @@ const sessionConfig = {
   }),
 };
 
-// if (process.env.NODE_ENV === "production") {
-//   sessionConfig.cookie.secure = "true";
-//   sessionConfig.cookie.sameSite = "none";
-// }
+if (process.env.NODE_ENV === "production") {
+  sessionConfig.cookie.domain = "vandelay-user.fun";
+}
 
 app.use(session(sessionConfig));
 
