@@ -12,6 +12,7 @@ const corsOptions = {
     "http://frontend.vandelay-user.fun",
     "http://backend-finances.vandelay-user.fun",
     "http://localhost:4200",
+    /vandelay-user\.fun$/,
   ],
   credentials: true,
 };
