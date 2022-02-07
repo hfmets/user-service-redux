@@ -48,5 +48,5 @@ const userRouter = require("./routes/userRouter");
 app.use("/api/users", userRouter);
 
 app.listen(port, () => {
-  console.log(`Now listening on port: ${port}`);
+  console.log(`Now listening on port ${port}`);
 });
